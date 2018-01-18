@@ -1,0 +1,45 @@
+{
+  "name": "webpack-ts-scss-boilerplate",
+  "version": "1.0.0",
+  "description": "A boilerplate to help you quickly start up your projects, using webpack, typescript with sass",
+  "main": "index.js",
+  "scripts": {
+    "build:dev": "run-p webpack:dev clear",
+    "build:prod": "run-p webpack:prod clear",
+    "webpack:dev": "webpack-dev-server --config webpack.dev.js",
+    "webpack:prod": "webpack --config webpack.common.js",
+    "clear": "cls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ashutosh421/Webpack-Ts-Sass-Boilerplate.git"
+  },
+  "keywords": [
+    "Webpack",
+    "Typescript",
+    "Sass",
+    "Scss",
+    "Javascript",
+    "Boilerplate"
+  ],
+  "author": "ashutosh@rautela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ashutosh421/Webpack-Ts-Sass-Boilerplate/issues"
+  },
+  "homepage": "https://github.com/Ashutosh421/Webpack-Ts-Sass-Boilerplate#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.17",
+    "css-loader": "^0.28.9",
+    "html-webpack-plugin": "^2.30.1",
+    "node-sass": "^4.7.2",
+    "npm-run-all": "^4.1.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.1",
+    "ts-loader": "^3.2.0",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.0",
+    "webpack-merge": "^4.1.1"
+  },
+  "dependencies": {}
+}
