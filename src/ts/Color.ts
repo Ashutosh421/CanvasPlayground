@@ -19,6 +19,14 @@ export class Color{
         return new Color(0,0,255,1);
     }
 
+    public static get Black():Color{
+        return new Color(0,0,0,1);
+    }
+
+    public static get White():Color{
+        return new Color(255,255,255,1);
+    }
+
     public set r(r:number){
         this.rgba[0] = r;
     }
@@ -41,5 +49,13 @@ export class Color{
 
     public get b():number{
         return this.rgba[2];
+    }
+
+    public set a(a:number){
+        this.rgba[3] = a;
+    }
+
+    public get a():number{
+        return this.rgba[3];
     }
 }
