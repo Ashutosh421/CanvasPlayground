@@ -4,7 +4,7 @@ import { Rectangle } from "./src/ts/Shapes/Rectangle";
 import { ZoomAtPointHandler } from "./src/ts/ZoomAtPoint";
 import { Line } from "./src/ts/Shapes/Line";
 import { Color } from "./src/ts/Color";
-import { Scene } from "./src/ts/Scene";
+import { Scene } from "./src/ts/Scene/Scene";
 import { Entity } from "./src/ts/Entity";
 import { Random } from "./src/ts/Utils/Random";
 
@@ -16,10 +16,10 @@ let canvas:HTMLCanvasElement;
 let canvasContext2D: CanvasRenderingContext2D;
 let displaySize:Vector2D = new Vector2D(1024,768);
 let zoomHandler:ZoomAtPointHandler;
-let line:Line = new Line(`line_${entityCounter++}`,new Vector2D(100,100), new Vector2D(200,100));
+let line:Line = new Line(`Line_${entityCounter++}`,new Vector2D(100,100), new Vector2D(200,100));
 line.setColor(new Color(0,0,0,1)).setShowEdges(true).setResizable(true);
 
-let line1:Line = new Line(`line_${entityCounter++}`,new Vector2D(200,200), new Vector2D(400,200));
+let line1:Line = new Line(`Line_${entityCounter++}`,new Vector2D(200,200), new Vector2D(400,200));
 line1.setColor(new Color(0,0,0,1)).setShowEdges(true).setResizable(true);
 
 (function(){
@@ -55,7 +55,7 @@ function renderLoop(){
     canvasContext2D.fillRect(0,0,displaySize.x,displaySize.y);
 
     scene.render(canvasContext2D);
-    line.checkIntersection(line1);
+    //line.checkIntersection(line1);
 
     requestAnimationFrame(renderLoop);
 }
@@ -73,6 +73,5 @@ window.addEventListener('keydown', event=>{
     const line:Line = new Line(`Line_${entityCounter++}`, new Vector2D(Random.RangeInt(0,displaySize.x),Random.RangeInt(0,displaySize.y)), new Vector2D(Random.RangeInt(0,displaySize.x), Random.RangeInt(0,displaySize.y)));
     line.setColor(new Color(0,0,0,1)).setShowEdges(true).setResizable(true);
     scene.addEntity(line);
-
     //console.log(`Random Range ${Random.RangeInt(10,100)}`);
 });

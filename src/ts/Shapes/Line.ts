@@ -22,8 +22,7 @@ export class Line extends Entity{
 
     private slope:number = 0;
     private yIntercept:number = 0;
-    private intersectionPoint:Vector2D = Vector2D.Zero;
-    private intersectionDetected:boolean = false;
+    private intersectedLines:Map<string , Vector2D> = new Map<string, Vector2D>();
 
     constructor(id:string ,startPos:Vector2D , endPos:Vector2D){
         super(id);
@@ -136,40 +135,45 @@ export class Line extends Entity{
 
     public checkIntersection(line:Line){
         if(this.slope === line.slope){
-            this.intersectionDetected = false;
+            return;
         }
         else{
-            this.intersectionPoint.x = (line.yIntercept - this.yIntercept)/(this.slope - line.slope);
-            this.intersectionPoint.y = this.slope * this.intersectionPoint.x + this.yIntercept;
+            const currentIDCheck:string = line.ID;
+            const checkingATPoint = Vector2D.Zero;
+            checkingATPoint.x = (line.yIntercept - this.yIntercept)/(this.slope - line.slope);
+            checkingATPoint.y = this.slope * checkingATPoint.x + this.yIntercept;
 
             const lineDirection1 = Vector2D.subtract(this.endPosition , this.startPosition);
-            const pointDirection = Vector2D.subtract(this.endPosition , this.intersectionPoint);;
+            const pointDirection = Vector2D.subtract(this.endPosition , checkingATPoint);;
 
             const lineLine1 = Vector2D.dot(lineDirection1 , lineDirection1);
             const linePoint1 = Vector2D.dot(lineDirection1 , pointDirection);
 
             const lineDirection2 = Vector2D.subtract(line.endPosition , line.startPosition);
-            const pointDirection2 = Vector2D.subtract(line.endPosition , this.intersectionPoint);
+            const pointDirection2 = Vector2D.subtract(line.endPosition , checkingATPoint);
             const lineLine2 = Vector2D.dot(lineDirection2 , lineDirection2);
             const linePoint2 = Vector2D.dot(lineDirection2 , pointDirection2);
             
             if(linePoint1 > 0 && linePoint1 < lineLine1 && linePoint2 > 0 && linePoint2 < lineLine2){
-                this.intersectionDetected = true;
+                //this.intersectionPoints.push(intersectionPoint);
+                const intersectionPoint = checkingATPoint;
+                !this.intersectedLines.get(line.ID) ? this.intersectedLines.set(line.ID , intersectionPoint) : this.intersectedLines.set(line.ID , intersectionPoint);
             }
             else{
-                this.intersectionDetected = false;
+                this.intersectedLines.get(line.ID) && this.intersectedLines.delete(line.ID);
             }
         }
     }
 
     public renderCollision(context2D:CanvasRenderingContext2D){
-        if(this.intersectionDetected){
+        
+        this.intersectedLines.forEach(intersectionPoint => {
             context2D.strokeStyle = `rgba(255,0,0,1)`;
             context2D.beginPath();
-            context2D.arc(this.intersectionPoint.x, this.intersectionPoint.y , this.controlRadiusSize , 0 , 360);
+            context2D.arc(intersectionPoint.x, intersectionPoint.y , this.controlRadiusSize , 0 , 360);
             context2D.stroke();
             context2D.closePath();
-        }
+        });
     }
 }
 
