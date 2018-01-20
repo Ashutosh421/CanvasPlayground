@@ -16,13 +16,20 @@ let scene: Scene;
 let canvas: HTMLCanvasElement;
 let canvasContext2D: CanvasRenderingContext2D;
 let displaySize: Vector2D = new Vector2D(1024, 768);
-let zoomHandler: ZoomAtPointHandler;
 
 let pointLight: Circle = new Circle(`Light_${entityCounter++}`, new Vector2D(100, 100), 30);
-let ray1: Line = new Line(`Line_0`, pointLight.position, Vector2D.Zero);
-let ray2: Line = new Line(`Line_1`, pointLight.position, new Vector2D(displaySize.x, 0));
-let ray3: Line = new Line(`Line_2`, pointLight.position, new Vector2D(displaySize.x, displaySize.y));
-let ray4: Line = new Line(`Line_3`, pointLight.position, new Vector2D(0, displaySize.y));
+let rayTargets:Array<Vector2D> = new Array<Vector2D>();
+rayTargets.push(Vector2D.Zero);
+rayTargets.push(new Vector2D(displaySize.x/2, 0));
+rayTargets.push(new Vector2D(displaySize.x, 0));
+rayTargets.push(new Vector2D(displaySize.x, displaySize.y/2));
+rayTargets.push(new Vector2D(displaySize.x, displaySize.y));
+rayTargets.push(new Vector2D(displaySize.x/2, displaySize.y));
+rayTargets.push(new Vector2D(0, displaySize.y));
+rayTargets.push(new Vector2D(0, displaySize.y/2));
+
+
+let rays:Array<Line> = new Array<Line>();
 
 
 (function () {
@@ -30,9 +37,6 @@ let ray4: Line = new Line(`Line_3`, pointLight.position, new Vector2D(0, display
     document.body.appendChild(canvas);   //Appending the Canvas to the document
     initCanvas();
     requestAnimationFrame(renderLoop);
-
-    // addRandomLine();
-    // addRandomLine();
     
 })();
 
@@ -45,19 +49,15 @@ function initCanvas() {
     canvas.setAttribute("height", displaySize.y.toString());
 
     canvasContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
-    zoomHandler = new ZoomAtPointHandler(canvasContext2D, canvas);
 
     scene = new Scene();
     scene.addEntity(pointLight);
-    scene.addEntity(ray1);
-    scene.addEntity(ray2);
-    scene.addEntity(ray3);
-    scene.addEntity(ray4);
-    
-    ray1.setPosition(pointLight.position);
-    ray2.setPosition(pointLight.position);
-    ray3.setPosition(pointLight.position);
-    ray4.setPosition(pointLight.position);
+   
+    for(let rayTarget of rayTargets){
+        const ray = new Line(`Line_${entityCounter++}` , pointLight.position , rayTarget);
+        rays.push(ray);
+        scene.addEntity(ray);
+    }
 }
 
 /**
@@ -70,18 +70,17 @@ function renderLoop() {
     canvasContext2D.fillRect(0, 0, displaySize.x, displaySize.y);
 
     scene.render(canvasContext2D);
+    for(let ray of rays){
+        ray.setPosition(pointLight.position);
+    }
 
     requestAnimationFrame(renderLoop);
 }
 
 canvas.addEventListener('mouseenter', event => scene.Entities.forEach(entity => entity.onMouseEnter(new Vector2D(event.offsetX, event.offsetY))));
-
 canvas.addEventListener('mousedown', event => scene.Entities.forEach(entity => entity.onMouseDown(new Vector2D(event.offsetX, event.offsetY))));
-
 canvas.addEventListener('mousemove', event => scene.Entities.forEach(entity => entity.onMouseMove(new Vector2D(event.offsetX, event.offsetY))));
-
 canvas.addEventListener('mouseup', event => scene.Entities.forEach(entity => entity.onMouseUp(new Vector2D(event.offsetX, event.offsetY))));
-
 window.addEventListener('keydown', event => {
     //console.log(`Key Down ${event.keyCode}`);
     
