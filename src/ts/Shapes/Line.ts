@@ -57,12 +57,8 @@ export class Line extends Entity{
 
         this.renderCollision(context2D);
     }
-
-    public onMouseEnter(mousePosition:Vector2D){
-        // console.log(`Mouse Enter ${mousePosition.x} ${mousePosition.y}`);
-    }
-
-    public onMouseDown(mousePosition:Vector2D){
+   
+    onMouseDown(mousePosition:Vector2D){
         ///Check if the Mouse Down lies inside the Circle
         const distanceAtFirstCircle = Vector2D.distance(this.startPosition , mousePosition);
         this.currentCircle = distanceAtFirstCircle < (this.controlRadiusSize * 1.5) ? 0 : -1;
@@ -71,11 +67,11 @@ export class Line extends Entity{
         distanceAtSecondCircle < (this.controlRadiusSize * 1.5 )&& (this.currentCircle = 1);
     }
 
-    public onMouseUp(mousePosition:Vector2D){
+    onMouseUp(mousePosition:Vector2D){
         this.currentCircle = -1;
     }
 
-    public onMouseMove(mousePosition:Vector2D){
+    onMouseMove(mousePosition:Vector2D){
         this.currentCircle === 0 && (this.startPosition = mousePosition);
         this.currentCircle === 1 && (this.endPosition = mousePosition);
 
@@ -174,6 +170,10 @@ export class Line extends Entity{
             context2D.stroke();
             context2D.closePath();
         });
+    }
+
+    public setPosition(position:Vector2D){
+        this.startPosition = position;
     }
 }
 

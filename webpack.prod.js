@@ -4,6 +4,6 @@ const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = merge(common , {
     plugins: [
-        new UglifyJSWebpackPlugin(),
+      //  new UglifyJSWebpackPlugin(),
     ] 
 });

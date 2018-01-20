@@ -7,7 +7,7 @@
     "build:dev": "run-p webpack:dev clear",
     "build:prod": "run-p webpack:prod clear",
     "webpack:dev": "webpack-dev-server --config webpack.dev.js",
-    "webpack:prod": "webpack --config webpack.common.js",
+    "webpack:prod": "webpack --config webpack.prod.js",
     "clear": "cls"
   },
   "repository": {

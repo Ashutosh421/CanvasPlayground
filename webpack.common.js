@@ -33,7 +33,13 @@ module.exports = {
             }
         ]
     },
-    devtool: 'source-map',
+    resolve: {
+        extensions: ['.ts', '.js', '.json', '.scss']
+    },
+    output: {
+        filename: "canvas2DRaycast.js",
+        path: path.resolve(__dirname, './dist')        
+    },
     plugins: [
         new HtmlWebpackPlugin(
             {
@@ -43,12 +49,5 @@ module.exports = {
             }
         ),
         new CleanWebpackPlugin(['dist'])
-    ],
-    resolve: {
-        extensions: ['.ts', '.js', '.json', '.scss']
-    },
-    output: {
-        filename: "canvas2DRaycast.js",
-        path: path.resolve(__dirname, '/dist')        
-    }
+    ]
 }
