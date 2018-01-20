@@ -14,7 +14,7 @@ let mouseLocation:Vector2D;
 let scene:Scene;
 let canvas:HTMLCanvasElement;
 let canvasContext2D: CanvasRenderingContext2D;
-let displaySize:Vector2D = new Vector2D(1024,768);
+let displaySize:Vector2D = new Vector2D(1366,768);
 let zoomHandler:ZoomAtPointHandler;
 let line:Line = new Line(`Line_${entityCounter++}`,new Vector2D(100,100), new Vector2D(200,100));
 line.setColor(new Color(0,0,0,1)).setShowEdges(true).setResizable(true);
