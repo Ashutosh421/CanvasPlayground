@@ -15,7 +15,7 @@ let mouseLocation: Vector2D;
 let scene: Scene;
 let canvas: HTMLCanvasElement;
 let canvasContext2D: CanvasRenderingContext2D;
-let displaySize: Vector2D = new Vector2D(1024, 768);
+let displaySize: Vector2D = new Vector2D(1366, 768);
 
 let pointLight: Circle = new Circle(`Light_${entityCounter++}`, new Vector2D(100, 100), 30);
 let rayTargets:Array<Vector2D> = new Array<Vector2D>();
